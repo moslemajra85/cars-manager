@@ -36,13 +36,26 @@ To get a local copy up and running, follow these simple steps:
 
 3. Install the dependencies:
 
+   Using Yarn:
    ```bash
    yarn install
    ```
 
+   Using npm:
+   ```bash
+   npm install
+   ```
+
 4. Start the application:
+
+   Using Yarn:
    ```bash
    yarn start
+   ```
+
+   Using npm:
+   ```bash
+   npm start
    ```
 
 ## Contributing
