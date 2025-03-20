@@ -1,0 +1,30 @@
+import React from 'react';
+import { Card } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const PriceComponent = ({ cars }) => {
+  const totalPrice =
+    cars?.reduce((sum, car) => sum + Number(car.price), 0) || 0;
+
+  return (
+    <div className="d-flex justify-content-end mt-3 mb-5">
+      <Card className="shadow-lg border-0" style={{ width: '300px' }}>
+        <Card.Body className="bg-success bg-gradient text-white rounded">
+          <div className="d-flex justify-content-between align-items-center">
+            <div>
+              <h4 className="mb-0">Total Value</h4>
+              <small className="text-white-50">All Cars</small>
+            </div>
+            <div className="text-end">
+              <h2 className="mb-0">
+                <span className="me-2">💰</span>${totalPrice.toLocaleString()}
+              </h2>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+    </div>
+  );
+};
+
+export default PriceComponent;
