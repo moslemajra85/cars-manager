@@ -5,17 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeCar } from '../store';
 
 const CarList = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const cars = useSelector((state) => state.cars.cars);
+  const cars = useSelector((state) => state.cars.data);
   const dispatch = useDispatch();
 
   const handleDeleteCar = (car) => {
     dispatch(removeCar(car));
   };
 
-  const filteredCars = cars.filter(car =>
-    car.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredCars = cars.filter((car) =>
+  //   car.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   return (
     <Container className="mt-5">
@@ -30,7 +29,7 @@ const CarList = () => {
           <input
             type="text"
             placeholder="Search by car name"
-            value={searchTerm}
+            value=""
             onChange={(e) => setSearchTerm(e.target.value)}
             className="form-control mb-3"
           />
@@ -44,7 +43,7 @@ const CarList = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredCars.map((car, index) => (
+              {cars.map((car, index) => (
                 <tr key={car.id} className="align-middle">
                   <td className="px-4">{index + 1}</td>
                   <td className="px-4">{car.name}</td>
@@ -62,7 +61,7 @@ const CarList = () => {
                   </td>
                 </tr>
               ))}
-              {filteredCars.length === 0 && (
+              {cars.length === 0 && (
                 <tr>
                   <td colSpan="4" className="text-center py-4 text-muted">
                     No cars available
@@ -74,7 +73,7 @@ const CarList = () => {
         </Card.Body>
         <Card.Footer className="bg-light py-3">
           <div className="text-muted text-center">
-            Total Cars: {filteredCars.length}
+            Total Cars: {cars.length}
           </div>
         </Card.Footer>
       </Card>

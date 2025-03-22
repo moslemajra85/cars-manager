@@ -20,6 +20,8 @@ const formSlice = createSlice({
     },
   },
 
+  // add new actions to be whatched in addtion to the default one
+  // {type: "cars/addCar"}
   extraReducers(builder) {
     builder.addCase(addCar, (state, action) => {
       state.name = '';

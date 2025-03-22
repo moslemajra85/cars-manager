@@ -5,7 +5,7 @@ const carsSlice = createSlice({
   name: 'cars', // Name of the slice
   initialState: {
     searchTerm: '', // Initial state for the search term
-    cars: [], // Initial state for the list of cars
+    data: [], // Initial state for the list of cars
   },
 
   reducers: {
@@ -17,15 +17,16 @@ const carsSlice = createSlice({
     // we assume that action.payload: {name: "xxx",cost: "455"}
     // dispatch(addCar({name, cost}))
     addCar: (state, action) => {
-      state.cars.push({
+      state.data.push({
         name: action.payload.name, // Car name from the action payload
         cost: action.payload.cost, // Car price from the action payload
         id: nanoid(), // Generate a unique ID for the car
       });
     },
     // Action to remove a car by its ID
-    removeCar: (state, action) => {
-      state.cars = state.cars.filter((car) => car.id !== action.payload.id); // Filter out the car with the matching ID
+    // payload: {name: "", cost:"", id:dd}
+     removeCar: (state, action) => {
+      state.data = state.data.filter((car) => car.id !== action.payload.id); // Filter out the car with the matching ID
     },
   },
  
