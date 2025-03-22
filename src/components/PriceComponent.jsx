@@ -1,10 +1,11 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-const PriceComponent = ({ cars }) => {
+import { useSelector } from 'react-redux';
+const PriceComponent = () => {
+  const { cars } = useSelector((state) => state.cars);
   const totalPrice =
-    cars?.reduce((sum, car) => sum + Number(car.price), 0) || 0;
+    cars?.reduce((sum, car) => sum + Number(car.cost), 0) || 0;
 
   return (
     <div className="d-flex justify-content-end mt-3 mb-5">

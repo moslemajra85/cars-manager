@@ -1,27 +1,33 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Card, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeName, changeCost, addCar } from '../store';
 
-const CarForm = ({ onAddCar }) => {
-  const [car, setCar] = useState({
-    name: '',
-    price: '',
+const CarForm = () => {
+  // access the global state
+  // get name and cost from global state object
+  const { name, cost } = useSelector((state) => {
+    return state.form;
   });
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    onAddCar(car);
-    // Reset form
-    setCar({ name: '', price: '' });
+    dispatch(
+      addCar({
+        name,
+        cost,
+      })
+    );
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCar((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleNameChange = (e) => {
+     dispatch(changeName(e.target.value));
+  };
+
+  const handleCostChange = (e) => {
+    dispatch(changeCost(+e.target.value));
   };
 
   return (
@@ -41,9 +47,8 @@ const CarForm = ({ onAddCar }) => {
                   <Form.Label className="fw-bold">Car Name</Form.Label>
                   <Form.Control
                     type="text"
-                    name="name"
-                    value={car.name}
-                    onChange={handleChange}
+                    value={name}
+                    onChange={handleNameChange}
                     placeholder="Enter car name"
                     required
                     className="form-control-lg shadow-sm"
@@ -55,9 +60,8 @@ const CarForm = ({ onAddCar }) => {
                   <Form.Label className="fw-bold">Price ($)</Form.Label>
                   <Form.Control
                     type="number"
-                    name="price"
-                    value={car.price}
-                    onChange={handleChange}
+                    value={!cost ? '' : cost}
+                    onChange={handleCostChange}
                     placeholder="Enter car price"
                     required
                     className="form-control-lg shadow-sm"

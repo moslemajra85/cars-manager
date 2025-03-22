@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { Container, InputGroup, Form, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { changeSearchTerm } from '../store';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SearchCar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const { searchTerm } = useSelector((state) => state.cars.searchTerm);
+  const dispatch = useDispatch();
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-    // Handle search logic here
-    console.log('Searching for:', e.target.value);
+    dispatch(changeSearchTerm(e.target.value));
   };
 
   return (

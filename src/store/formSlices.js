@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'; // Import createSlice from Redux Toolkit
+import { addCar } from './carsSlice';
 
 // Create a slice of the Redux store for managing form data
 const formSlice = createSlice({
@@ -17,6 +18,13 @@ const formSlice = createSlice({
     changeCost: (state, action) => {
       state.cost = action.payload; // Update the cost in the state
     },
+  },
+
+  extraReducers(builder) {
+    builder.addCase(addCar, (state, action) => {
+      state.name = '';
+      state.cost = 0;
+    });
   },
 });
 

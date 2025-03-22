@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Table, Button, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeCar } from '../store';
 
-const CarList = ({ cars, onDelete }) => {
+const CarList = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const cars = useSelector((state) => state.cars.cars);
+  const dispatch = useDispatch();
+
+  const handleDeleteCar = (car) => {
+    dispatch(removeCar(car));
+  };
+
+  const filteredCars = cars.filter(car =>
+    car.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <Container className="mt-5">
       <Card className="shadow">
@@ -13,6 +27,13 @@ const CarList = ({ cars, onDelete }) => {
           </h3>
         </Card.Header>
         <Card.Body className="p-0">
+          <input
+            type="text"
+            placeholder="Search by car name"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="form-control mb-3"
+          />
           <Table hover responsive className="mb-0">
             <thead className="bg-light">
               <tr>
@@ -23,16 +44,16 @@ const CarList = ({ cars, onDelete }) => {
               </tr>
             </thead>
             <tbody>
-              {cars.map((car, index) => (
+              {filteredCars.map((car, index) => (
                 <tr key={car.id} className="align-middle">
                   <td className="px-4">{index + 1}</td>
                   <td className="px-4">{car.name}</td>
-                  <td className="px-4">${car.price}</td>
+                  <td className="px-4">$ {car.cost}</td>
                   <td className="px-4 text-center">
                     <Button
                       variant="danger"
                       size="sm"
-                      onClick={() => onDelete(car.id)}
+                      onClick={() => handleDeleteCar(car)}
                       className="shadow-sm"
                     >
                       <span className="me-1">🗑️</span>
@@ -41,7 +62,7 @@ const CarList = ({ cars, onDelete }) => {
                   </td>
                 </tr>
               ))}
-              {cars.length === 0 && (
+              {filteredCars.length === 0 && (
                 <tr>
                   <td colSpan="4" className="text-center py-4 text-muted">
                     No cars available
@@ -53,7 +74,7 @@ const CarList = ({ cars, onDelete }) => {
         </Card.Body>
         <Card.Footer className="bg-light py-3">
           <div className="text-muted text-center">
-            Total Cars: {cars.length}
+            Total Cars: {filteredCars.length}
           </div>
         </Card.Footer>
       </Card>
